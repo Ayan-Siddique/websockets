@@ -17,13 +17,15 @@ wss.on("connection", (socket) => {
   socket.on("message", (data, isBinary) => {
     console.log(data.toString());
     wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(data ,{binary: isBinary});
-    }
-  });
-  });
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(data, { binary: isBinary });
+      }
+    });
+    socket.on("close", () => {
+      console.log("Client disconnected");
+    });
 
-  
-
-  socket.send("connect established to Web-socket");
+    console.log("users", ++user);
+    
+  });
 });
